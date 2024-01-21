@@ -15,8 +15,7 @@ public class FirebaseUtilities implements StorageInterface {
       // TODO:
       //  Create /resources/ folder and add your admin SDK from Firebase.
       FileInputStream serviceAccount =
-          new FileInputStream(
-"src/main/resources/<YOUR_SECRETS>.json");
+          new FileInputStream(System.getProperty("user.dir")+"/src/main/resources/<YOUR_SECRETS>.json");
       FirebaseOptions options =
           new FirebaseOptions.Builder()
               .setCredentials(GoogleCredentials.fromStream(serviceAccount))
