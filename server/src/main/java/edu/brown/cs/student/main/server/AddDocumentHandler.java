@@ -1,6 +1,5 @@
-package edu.brown.cs.student.main.server.handlers;
+package edu.brown.cs.student.main.server;
 
-import edu.brown.cs.student.main.server.storage.StorageInterface;
 import spark.Request;
 import spark.Response;
 import spark.Route;
