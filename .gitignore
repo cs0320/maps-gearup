@@ -1,6 +1,7 @@
 .idea/
 
 resources/
+target/
 
 node_modules
 .pnp

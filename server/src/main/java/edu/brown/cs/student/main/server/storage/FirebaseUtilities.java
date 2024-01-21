@@ -44,19 +44,9 @@ public class FirebaseUtilities implements StorageInterface {
 
       // 1: Get a ref to the collection that you created
 
-      Firestore db = FirestoreClient.getFirestore();
-      CollectionReference collectionRef = db.collection("things");
-      DocumentReference thingRef = collectionRef.document(uid);
-
       // 2: Make the data payload to add to your collection
 
-      Map<String, Object> data = new HashMap<>();
-      data.put("field1", "value1");
-      data.put("field2", 42);
-
       // 3: Write data to the collection ref
-
-      thingRef.set(data);
 
       return "Success";
     } catch (Exception e) {
