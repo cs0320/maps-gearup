@@ -9,14 +9,12 @@ public class Server {
 
 /**Setting up the server this way and not putting everything to
  * run on main so they can use dependency injection for possible mocking**/
-  public static void setUpServer(){
+  public static void setUpServer(FirebaseInterface firebaseInterface){
     int port = 3232;
     Spark.port(port);
 
     /**Just added these to check if firebase was working**/
-    Spark.get("addPin", new AddPin());
-    Spark.get("removePin", new RemovePin());
-    Spark.get("myPins", new GetPins());
+    Spark.get("addPin", new AddInfoHandler(firebaseInterface));
     /**These, along with the classes can be deleted**/
     Spark.notFound(
         (request, response) -> {
@@ -42,7 +40,7 @@ public class Server {
     } catch (Exception e) {
       System.err.println("Could not connect to database: " + e.getMessage());
     }
-     setUpServer();
+     setUpServer(new FirebaseUtilities());
     //Example query: http://localhost:3232/myPins?uid=325UsopQ2MdWbewYZDVs6mKKTi62
   }
 }
