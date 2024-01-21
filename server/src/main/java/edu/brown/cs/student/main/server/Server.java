@@ -1,4 +1,7 @@
 package edu.brown.cs.student.main.server;
+import edu.brown.cs.student.main.server.handlers.AddDocumentHandler;
+import edu.brown.cs.student.main.server.storage.FirebaseUtilities;
+import edu.brown.cs.student.main.server.storage.StorageInterface;
 import spark.Spark;
 
 /**
