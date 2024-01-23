@@ -1,4 +1,6 @@
 package edu.brown.cs.student.main.server;
+import static spark.Spark.before;
+
 import edu.brown.cs.student.main.server.handlers.AddDocumentHandler;
 import edu.brown.cs.student.main.server.storage.FirebaseUtilities;
 import edu.brown.cs.student.main.server.storage.StorageInterface;
@@ -12,6 +14,11 @@ public class Server {
   public static void setUpServer(){
     int port = 3232;
     Spark.port(port);
+
+    before((request, response) -> {
+      response.header("Access-Control-Allow-Origin", "*");
+      response.header("Access-Control-Allow-Methods", "*");
+    });
 
     StorageInterface firebaseUtils = new FirebaseUtilities();
 
