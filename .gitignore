@@ -2,6 +2,7 @@
 
 resources/
 target/
+private/
 
 node_modules
 .pnp
