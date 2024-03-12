@@ -16,10 +16,14 @@ test.beforeEach("add spoof uid cookie to browser", async ({ context }) => {
   await context.addCookies([
     {
       name: "uid",
-      value: "spoofed-uid",
+      value: "mock-user-id",
       path: "/",
     },
   ]);
+
+  // Possibly wipe everything for this spoofed UID in the database.
+  
+
 });
 
 /**

@@ -45,6 +45,8 @@ public class FirebaseUtilities implements StorageInterface {
     if (uid == null || collection_id == null) {
       throw new IllegalArgumentException("getCollection: uid and/or collection_id cannot be null");
     }
+    // QUESTION TO TIM: should we make this an exercise too?
+
     // gets all documents in the collection 'collection_id' for user 'uid'
 
     Firestore db = FirestoreClient.getFirestore();
@@ -81,5 +83,20 @@ public class FirebaseUtilities implements StorageInterface {
     // 1: Get a ref to the collection that you created
 
     // 2: Write data to the collection ref
+  }
+
+  @Override
+  public void removeUser(String uid) throws IllegalArgumentException {
+    if (uid == null) {
+      throw new IllegalArgumentException("removeUser: uid cannot be null");
+    }
+    // QUESTION TO TIM: should we make this an exercise too?
+
+    // removes all data for user 'uid'
+    Firestore db = FirestoreClient.getFirestore();
+    // 1: Get a ref to the user's document
+    DocumentReference userRef = db.collection("users").document(uid);
+    // 2: Remove the user document:
+    userRef.delete();
   }
 }

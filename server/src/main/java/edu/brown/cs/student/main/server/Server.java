@@ -3,6 +3,7 @@ package edu.brown.cs.student.main.server;
 import static spark.Spark.after;
 
 import edu.brown.cs.student.main.server.handlers.AddWordHandler;
+import edu.brown.cs.student.main.server.handlers.ClearUserHandler;
 import edu.brown.cs.student.main.server.handlers.ListWordsHandler;
 import edu.brown.cs.student.main.server.storage.FirebaseUtilities;
 import edu.brown.cs.student.main.server.storage.StorageInterface;
@@ -10,7 +11,10 @@ import java.io.IOException;
 import spark.Filter;
 import spark.Spark;
 
-/** Top Level class for our project, utilizes spark to create and maintain our server. */
+/**
+ * Top Level class for our project, utilizes spark to create and maintain our
+ * server.
+ */
 public class Server {
 
   public static void setUpServer() {
@@ -18,11 +22,10 @@ public class Server {
     Spark.port(port);
 
     after(
-        (Filter)
-            (request, response) -> {
-              response.header("Access-Control-Allow-Origin", "*");
-              response.header("Access-Control-Allow-Methods", "*");
-            });
+        (Filter) (request, response) -> {
+          response.header("Access-Control-Allow-Origin", "*");
+          response.header("Access-Control-Allow-Methods", "*");
+        });
 
     StorageInterface firebaseUtils;
     try {
@@ -30,6 +33,7 @@ public class Server {
 
       Spark.get("add-word", new AddWordHandler(firebaseUtils));
       Spark.get("list-words", new ListWordsHandler(firebaseUtils));
+      Spark.get("clear-user", new ClearUserHandler(firebaseUtils));
 
       Spark.notFound(
           (request, response) -> {

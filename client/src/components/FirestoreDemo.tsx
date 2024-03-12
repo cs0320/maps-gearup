@@ -14,9 +14,10 @@ export default function FirestoreDemo() {
   }, []);
 
   const addFavoriteWord = async (newWord: string) => {
-    // TODO: FIRESTORE PART 4:
     // - update the client words state to include the new word
+    setWords([...words, newWord])
     // - query the backend to add the new word to the database
+    await addWord(newWord);
   };
 
   return (

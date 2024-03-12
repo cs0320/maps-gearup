@@ -17,21 +17,21 @@ async function queryAPI(
   return response.json();
 }
 
-// TODO: FIRESTORE PART 3:
-// - Figure out what the query params should be for each of these functions (see comment above)
-
-// Question to review TA: is this even a good exercise ??? Is there a better learning portion for this part of the full-stack integration?
-// .. tryna balance the learning and tedium, knowing also that a lot of this will be async. Also want to give them
-// good frontend-backend integration stencil because this is the last project before their final
-
 export async function addWord(word: string) {
   return await queryAPI("add-word", {
-    // TODO: fill out!
+    uid: getLoginCookie() || "",
+    word: word,
   });
 }
 
 export async function getWords() {
   return await queryAPI("list-words", {
-    // TODO: fill out!
+    uid: getLoginCookie() || "",
+  });
+}
+
+export async function cleaUser() {
+  return await queryAPI("clear-user", {
+    uid: getLoginCookie() || "",
   });
 }
