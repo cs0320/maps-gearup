@@ -26,17 +26,15 @@ public class FirebaseUtilities implements StorageInterface {
     // add your admin SDK from Firebase. see:
     // https://docs.google.com/document/d/10HuDtBWjkUoCaVj_A53IFm5torB_ws06fW3KYFZqKjc/edit?usp=sharing
     String workingDirectory = System.getProperty("user.dir");
-    Path firebaseConfigPath =
-        Paths.get(workingDirectory, "src", "main", "resources", "firebase_config.json");
+    Path firebaseConfigPath = Paths.get(workingDirectory, "src", "main", "resources", "firebase_config.json");
     // ^-- if your /resources/firebase_config.json exists but is not found,
     // try printing workingDirectory and messing around with this path.
 
     FileInputStream serviceAccount = new FileInputStream(firebaseConfigPath.toString());
 
-    FirebaseOptions options =
-        new FirebaseOptions.Builder()
-            .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-            .build();
+    FirebaseOptions options = new FirebaseOptions.Builder()
+        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+        .build();
 
     FirebaseApp.initializeApp(options);
   }
@@ -81,10 +79,7 @@ public class FirebaseUtilities implements StorageInterface {
 
     Firestore db = FirestoreClient.getFirestore();
     // 1: Get a ref to the collection that you created
-    DocumentReference docRef =
-        db.collection("users").document(uid).collection(collection_id).document(doc_id);
 
     // 2: Write data to the collection ref
-    docRef.set(data);
   }
 }

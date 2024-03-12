@@ -27,14 +27,11 @@ async function queryAPI(
 export async function addWord(word: string) {
   return await queryAPI("add-word", {
     // TODO: fill out!
-    uid: getLoginCookie() || "",
-    word: word,
   });
 }
 
 export async function getWords() {
   return await queryAPI("list-words", {
     // TODO: fill out!
-    uid: getLoginCookie() || "",
   });
 }
