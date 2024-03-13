@@ -11,10 +11,7 @@ import java.io.IOException;
 import spark.Filter;
 import spark.Spark;
 
-/**
- * Top Level class for our project, utilizes spark to create and maintain our
- * server.
- */
+/** Top Level class for our project, utilizes spark to create and maintain our server. */
 public class Server {
 
   public static void setUpServer() {
@@ -22,10 +19,11 @@ public class Server {
     Spark.port(port);
 
     after(
-        (Filter) (request, response) -> {
-          response.header("Access-Control-Allow-Origin", "*");
-          response.header("Access-Control-Allow-Methods", "*");
-        });
+        (Filter)
+            (request, response) -> {
+              response.header("Access-Control-Allow-Origin", "*");
+              response.header("Access-Control-Allow-Methods", "*");
+            });
 
     StorageInterface firebaseUtils;
     try {

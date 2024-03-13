@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.server.storage;
 
+import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
@@ -26,15 +27,17 @@ public class FirebaseUtilities implements StorageInterface {
     // add your admin SDK from Firebase. see:
     // https://docs.google.com/document/d/10HuDtBWjkUoCaVj_A53IFm5torB_ws06fW3KYFZqKjc/edit?usp=sharing
     String workingDirectory = System.getProperty("user.dir");
-    Path firebaseConfigPath = Paths.get(workingDirectory, "src", "main", "resources", "firebase_config.json");
+    Path firebaseConfigPath =
+        Paths.get(workingDirectory, "src", "main", "resources", "firebase_config.json");
     // ^-- if your /resources/firebase_config.json exists but is not found,
     // try printing workingDirectory and messing around with this path.
 
     FileInputStream serviceAccount = new FileInputStream(firebaseConfigPath.toString());
 
-    FirebaseOptions options = new FirebaseOptions.Builder()
-        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-        .build();
+    FirebaseOptions options =
+        new FirebaseOptions.Builder()
+            .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+            .build();
 
     FirebaseApp.initializeApp(options);
   }
@@ -81,22 +84,60 @@ public class FirebaseUtilities implements StorageInterface {
 
     Firestore db = FirestoreClient.getFirestore();
     // 1: Get a ref to the collection that you created
+    CollectionReference collectionRef =
+        db.collection("users").document(uid).collection(collection_id);
 
     // 2: Write data to the collection ref
+    collectionRef.document(doc_id).set(data);
   }
 
+  // clears the collections inside of a specific user.
   @Override
-  public void removeUser(String uid) throws IllegalArgumentException {
+  public void clearUser(String uid) throws IllegalArgumentException {
     if (uid == null) {
       throw new IllegalArgumentException("removeUser: uid cannot be null");
     }
-    // QUESTION TO TIM: should we make this an exercise too?
+    try {
+      // removes all data for user 'uid'
+      Firestore db = FirestoreClient.getFirestore();
+      // 1: Get a ref to the user document
+      DocumentReference userDoc = db.collection("users").document(uid);
+      // 2: Delete the user document
+      deleteDocument(userDoc);
+    } catch (Exception e) {
+      System.err.println("Error removing user : " + uid);
+      System.err.println(e.getMessage());
+    }
+  }
 
-    // removes all data for user 'uid'
-    Firestore db = FirestoreClient.getFirestore();
-    // 1: Get a ref to the user's document
-    DocumentReference userRef = db.collection("users").document(uid);
-    // 2: Remove the user document:
-    userRef.delete();
+  private void deleteDocument(DocumentReference doc) {
+    // for each subcollection, run deleteCollection()
+    Iterable<CollectionReference> collections = doc.listCollections();
+    for (CollectionReference collection : collections) {
+      deleteCollection(collection);
+    }
+    // then delete the document
+    doc.delete();
+  }
+
+  // recursively removes all the documents and collections inside a collection
+  // https://firebase.google.com/docs/firestore/manage-data/delete-data#collections
+  private void deleteCollection(CollectionReference collection) {
+    try {
+
+      // get all documents in the collection
+      ApiFuture<QuerySnapshot> future = collection.get();
+      List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+
+      // delete each document
+      for (QueryDocumentSnapshot doc : documents) {
+        doc.getReference().delete();
+      }
+
+      // NOTE: the query to documents may be arbitrarily large. A more robust
+      // solution would involve batching the collection.get() call.
+    } catch (Exception e) {
+      System.err.println("Error deleting collection : " + e.getMessage());
+    }
   }
 }
