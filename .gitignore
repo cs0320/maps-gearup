@@ -1,8 +1,11 @@
 .idea/
 
 resources/
+server/resources/
 target/
 private/
+client/private/
+client/src/private/
 
 node_modules
 .pnp
