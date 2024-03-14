@@ -19,7 +19,7 @@
     <sortpom.version>3.0.0</sortpom.version>
 
     <!-- Spotless -->
-    <spotless.version>2.22.8</spotless.version>
+    <spotless.version>2.43.0</spotless.version>
   </properties>
 
   <dependencies>
