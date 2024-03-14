@@ -76,10 +76,5 @@ export default defineConfig({
       url: "http://localhost:8000",
       reuseExistingServer: !process.env.CI,
     },
-    {
-      command: "cd ../server && ./run",
-      url: "http://localhost:3232",
-      reuseExistingServer: !process.env.CI,
-    },
   ],
 });
