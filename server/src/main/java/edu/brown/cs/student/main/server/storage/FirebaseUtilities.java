@@ -27,15 +27,17 @@ public class FirebaseUtilities implements StorageInterface {
     // add your admin SDK from Firebase. see:
     // https://docs.google.com/document/d/10HuDtBWjkUoCaVj_A53IFm5torB_ws06fW3KYFZqKjc/edit?usp=sharing
     String workingDirectory = System.getProperty("user.dir");
-    Path firebaseConfigPath = Paths.get(workingDirectory, "src", "main", "resources", "firebase_config.json");
+    Path firebaseConfigPath =
+        Paths.get(workingDirectory, "src", "main", "resources", "firebase_config.json");
     // ^-- if your /resources/firebase_config.json exists but is not found,
     // try printing workingDirectory and messing around with this path.
 
     FileInputStream serviceAccount = new FileInputStream(firebaseConfigPath.toString());
 
-    FirebaseOptions options = new FirebaseOptions.Builder()
-        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-        .build();
+    FirebaseOptions options =
+        new FirebaseOptions.Builder()
+            .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+            .build();
 
     FirebaseApp.initializeApp(options);
   }
@@ -66,7 +68,6 @@ public class FirebaseUtilities implements StorageInterface {
     if (uid == null || collection_id == null) {
       throw new IllegalArgumentException("getCollection: uid and/or collection_id cannot be null");
     }
-    // QUESTION TO TIM: should we make this an exercise too?
 
     // gets all documents in the collection 'collection_id' for user 'uid'
 
