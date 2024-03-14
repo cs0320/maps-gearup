@@ -2,7 +2,6 @@ package edu.brown.cs.student.main.server.handlers;
 
 import edu.brown.cs.student.main.server.storage.StorageInterface;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import spark.Request;
 import spark.Response;
@@ -17,13 +16,10 @@ public class ClearUserHandler implements Route {
   }
 
   /**
-   * Invoked when a request is made on this route's corresponding path e.g.
-   * '/hello'
+   * Invoked when a request is made on this route's corresponding path e.g. '/hello'
    *
-   * @param request  The request object providing information about the HTTP
-   *                 request
-   * @param response The response object providing functionality for modifying the
-   *                 response
+   * @param request The request object providing information about the HTTP request
+   * @param response The response object providing functionality for modifying the response
    * @return The content to be set in the response
    */
   @Override
@@ -33,7 +29,8 @@ public class ClearUserHandler implements Route {
       String uid = request.queryParams("uid");
 
       // Remove the user from the database
-      this.storageHandler.removeUser(uid);
+      System.out.println("clearing words for user: " + uid);
+      this.storageHandler.clearUser(uid);
 
       responseMap.put("response_type", "success");
     } catch (Exception e) {

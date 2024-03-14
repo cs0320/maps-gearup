@@ -33,6 +33,8 @@ public class AddWordHandler implements Route {
       Map<String, Object> data = new HashMap<>();
       data.put("word", word);
 
+      System.out.println("adding word: " + word + " for user: " + uid);
+
       // get the current word count to make a unique word_id by index.
       int wordCount = this.storageHandler.getCollection(uid, "words").size();
       String wordId = "word-" + wordCount;

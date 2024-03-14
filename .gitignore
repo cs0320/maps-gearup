@@ -1,5 +1,8 @@
 .idea/
 
+geodata/*.json
+geodata/*.geojson
+
 resources/
 server/resources/
 target/

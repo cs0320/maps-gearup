@@ -11,15 +11,5 @@ public interface StorageInterface {
   List<Map<String, Object>> getCollection(String uid, String collection_id)
       throws InterruptedException, ExecutionException;
 
-  void removeUser(String uid) throws InterruptedException, ExecutionException;
-
-  // SPRINT 5 - ADDITIONAL FUNCTIONALITY
-  // Add methods to your StorageInterface to handle updating and deleting
-  // documents.
-  // For more info, see:
-  // - 'Update a Document' in
-  // https://firebase.google.com/docs/firestore/manage-data/add-data#java_19
-  // -
-  // https://cloud.google.com/firestore/docs/samples/firestore-data-delete-doc#firestore_data_delete_doc-java
-
+  void clearUser(String uid) throws InterruptedException, ExecutionException;
 }

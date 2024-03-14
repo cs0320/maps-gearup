@@ -30,8 +30,8 @@ export async function getWords() {
   });
 }
 
-export async function cleaUser() {
+export async function clearUser(uid: string = getLoginCookie() || "") {
   return await queryAPI("clear-user", {
-    uid: getLoginCookie() || "",
+    uid: uid,
   });
 }

@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 
-// TODO: FIRESTORE PART 2:
+// TODO: FIRESTORE PART 1:
 // - Fill in these functions to add cookie functionality to the firebase login.
 
 export function addLoginCookie(uid: string): void {
