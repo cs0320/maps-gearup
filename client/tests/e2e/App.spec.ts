@@ -49,21 +49,23 @@ test("on page load, I see the gearup screen and skip auth.", async ({
 test("I can add a word to my favorites list", async ({ page }) => {
   await page.goto("http://localhost:8000/");
   // - get the <p> elements inside the <ul> with aria-label="favorite-words"
-  const favoriteWords = await page.$$('[aria-label="favorite-words"] p');
+  const favoriteWords = await page.getByLabel("favorite-words").allInnerTexts();
   await expect(favoriteWords).toHaveLength(0);
 
-  await page.fill('[aria-label="word-input"]', "hello");
-  await page.click('[aria-label="add-word-button"]');
+  await page.getByLabel("word-input").fill("hello");
+  await page.getByLabel("add-word-button").click();
 
-  const favoriteWordsAfter = await page.$$('[aria-label="favorite-words"] p');
+  const favoriteWordsAfter = await page
+    .getByLabel("favorite-words")
+    .allInnerTexts();
   await expect(favoriteWordsAfter).toHaveLength(1);
 
   // .. and this works on refresh
   await page.reload();
   // wait a small amount of time for the backend fetch to update the site state.
   await page.waitForTimeout(1000);
-  const favoriteWordsAfterReload = await page.$$(
-    '[aria-label="favorite-words"] p'
-  );
+  const favoriteWordsAfterReload = await page
+    .getByLabel("favorite-words")
+    .allInnerTexts();
   await expect(favoriteWordsAfterReload).toHaveLength(1);
 });
