@@ -66,7 +66,6 @@ public class FirebaseUtilities implements StorageInterface {
     if (uid == null || collection_id == null) {
       throw new IllegalArgumentException("getCollection: uid and/or collection_id cannot be null");
     }
-    // QUESTION TO TIM: should we make this an exercise too?
 
     // gets all documents in the collection 'collection_id' for user 'uid'
 
