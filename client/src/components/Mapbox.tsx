@@ -1,6 +1,11 @@
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useState } from "react";
-import Map, { Layer, MapLayerMouseEvent, Source } from "react-map-gl";
+import { useEffect, useState } from "react";
+import Map, {
+  Layer,
+  MapLayerMouseEvent,
+  Source,
+  ViewStateChangeEvent,
+} from "react-map-gl";
 import { geoLayer, overlayData } from "../utils/overlay";
 
 const MAPBOX_API_KEY = process.env.MAPBOX_TOKEN;
