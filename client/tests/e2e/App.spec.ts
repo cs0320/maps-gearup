@@ -41,29 +41,23 @@ test("on page load, I see the gearup screen and skip auth.", async ({
   await page.goto("http://localhost:8000/");
   await expect(page.getByLabel("Gearup Title")).toBeVisible();
   // <i> with aria-label favorite-words-header should include the SPOOF_UID
-  await expect(page.getByLabel("favorite-words-header")).toContainText(
-    SPOOF_UID
-  );
+  await expect(page.getByLabel("user-header")).toContainText(SPOOF_UID);
 });
 
 test("I can add a word to my favorites list", async ({ page }) => {
   await page.goto("http://localhost:8000/");
   // - get the <p> elements inside the <ul> with aria-label="favorite-words"
-  const favoriteWords = await page.$$('[aria-label="favorite-words"] p');
-  await expect(favoriteWords).toHaveLength(0);
+  const favoriteWords = await page.getByLabel("favorite-words");
+  await expect(favoriteWords).not.toContainText("hello");
 
-  await page.fill('[aria-label="word-input"]', "hello");
-  await page.click('[aria-label="add-word-button"]');
+  await page.getByLabel("word-input").fill("hello");
+  await page.getByLabel("add-word-button").click();
 
-  const favoriteWordsAfter = await page.$$('[aria-label="favorite-words"] p');
-  await expect(favoriteWordsAfter).toHaveLength(1);
+  const favoriteWordsAfter = await page.getByLabel("favorite-words");
+  await expect(favoriteWordsAfter).toContainText("hello");
 
   // .. and this works on refresh
   await page.reload();
-  // wait a small amount of time for the backend fetch to update the site state.
-  await page.waitForTimeout(1000);
-  const favoriteWordsAfterReload = await page.$$(
-    '[aria-label="favorite-words"] p'
-  );
-  await expect(favoriteWordsAfterReload).toHaveLength(1);
+  const favoriteWordsAfterReload = await page.getByLabel("favorite-words");
+  await expect(favoriteWordsAfterReload).toContainText("hello");
 });

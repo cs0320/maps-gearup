@@ -51,13 +51,13 @@ export default function FirestoreDemo() {
 
       {/* list of words from db: */}
       <p>
-        <i aria-label="favorite-words-header">
-          Favorite words for user {USER_ID}:
-        </i>
+        <i aria-label="user-header">Favorite words for user {USER_ID}:</i>
       </p>
       <ul aria-label="favorite-words">
         {words.map((word, index) => (
-          <p key={index}>{word}</p>
+          <p key={index} aria-label="word">
+            {word}
+          </p>
         ))}
       </ul>
     </div>
