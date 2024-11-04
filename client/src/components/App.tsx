@@ -1,7 +1,13 @@
 import { initializeApp } from "firebase/app";
 import "../styles/App.css";
 import MapsGearup from "./MapsGearup";
-import AuthRoute from "./auth/AuthRoute";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignOutButton,
+  UserButton,
+} from "@clerk/clerk-react";
 
 // REMEMBER TO PUT YOUR API KEY IN A FOLDER THAT IS GITIGNORED!!
 // (for instance, /src/private/api_key.tsx)
@@ -21,7 +27,14 @@ initializeApp(firebaseConfig);
 function App() {
   return (
     <div className="App">
-      <AuthRoute gatedContent={<MapsGearup />} />
+      <SignedOut>
+        <SignInButton />
+      </SignedOut>
+      <SignedIn>
+        <SignOutButton />
+        <UserButton />
+        <MapsGearup />
+      </SignedIn>
     </div>
   );
 }
