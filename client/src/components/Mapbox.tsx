@@ -42,27 +42,30 @@ export default function Mapbox() {
 
   return (
     <div className="map">
-      <Map
-        mapboxAccessToken={MAPBOX_API_KEY}
-        {...viewState}
-        // TODO: MAPS PART 2:
-        // - add the primary props to the Map (style, mapStyle, onMove).
+      {MAPBOX_API_KEY ? 
+        <Map
+          mapboxAccessToken={MAPBOX_API_KEY}
+          {...viewState}
+          // TODO: MAPS PART 2:
+          // - add the primary props to the Map (style, mapStyle, onMove).
 
-        // style=...
-        // mapStyle=...
-        // onMove=...
+          // style=...
+          // mapStyle=...
+          // onMove=...
 
-        // TODO: MAPS PART 3:
-        // - add the onClick handler
+          // TODO: MAPS PART 3:
+          // - add the onClick handler
 
-        // onClick=...
-      >
-        {/* TODO: MAPS PART 6:
-            - add the Source and Layer components to the Map that take in data "overlay"
-            TODO: MAPS PART 7:
-            - add the geoLayer to the Layer component
-        */}
-      </Map>
+          // onClick=...
+        >
+          {/* TODO: MAPS PART 6:
+              - add the Source and Layer components to the Map that take in data "overlay"
+              TODO: MAPS PART 7:
+              - add the geoLayer to the Layer component
+          */}
+        </Map> 
+        :
+        'No MAXBOX_API_KEY provided. Cannot load map.'}
     </div>
   );
 }
